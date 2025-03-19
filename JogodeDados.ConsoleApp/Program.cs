@@ -6,13 +6,33 @@ namespace JogodeDados.ConsoleApp
     {
         static void Main(string[] args)
         {
+            const int endLine = 30;
+
             while(true)
             {
-                Start();
+                int playerPosition = 0;
+                bool gameReading = true;
 
+                while (gameReading)
+                {
+                    int result = Start();
+
+                    playerPosition += result;
+
+                    if (playerPosition >= endLine)
+                    {
+                        gameReading = false;
+                        Console.WriteLine("Parabéns! Você chegou na ultima casa!");
+                        Console.WriteLine("--------------------------------------");
+                    }
+                    else
+                        Console.WriteLine($"Você chegou na casa: {playerPosition} de {endLine}!");
+     
+                    Console.ReadLine();
+                }
                 int loop = ReplayCheck();
                 if (loop != 0)
-                   break;
+                    break;
             }
         }
         static int ReplayCheck()
