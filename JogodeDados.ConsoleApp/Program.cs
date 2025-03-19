@@ -8,49 +8,53 @@ namespace JogodeDados.ConsoleApp
         {
             const int endLine = 30;
 
-            while(true)
+            while (true)
             {
+                bool gameReading = true;
                 int playerPosition = 0;
                 int computerPosition = 0;
-                bool gameReading = true;
 
                 while (gameReading)
                 {
                     int playerResult = Start(playerPosition, endLine);
                     playerPosition += playerResult;
 
-                    if (playerPosition >= endLine)
+                    if (playerPosition > endLine)
                     {
-                        playerWon(gameReading, playerPosition);
-                        Console.WriteLine("Parabéns! Você terminou! 30 de 30!");
+                        playerPosition = endLine;
+                    }
+
+                    if (playerPosition == endLine)
+                    {
+                        Console.WriteLine($"Parabéns! Você chegou na casa: {playerPosition} de {endLine}!");
                         Console.WriteLine("--------------------------------------");
-                        break;
+                        gameReading = false;
+                        continue;
                     }
                     Console.WriteLine($"Você chegou na casa: {playerPosition} de {endLine}!");
                     playerEspecialCases(playerPosition, endLine);
 
                     if (playerPosition >= endLine)
                     {
-                        playerWon(gameReading, playerPosition);
-                        
-                        break;
+                        playerPosition = endLine;
+                        Console.WriteLine($"Parabéns! Você chegou na casa: {playerPosition} de {endLine}!");
+                        Console.WriteLine("--------------------------------------");
+                        gameReading = false;
+                        continue;
                     }
 
                     Console.ReadLine();
                 }
-                int loop = ReplayCheck();
-                if (loop != 0)
+                string loop = ReplayCheck();
+                if (loop != "S")
                     break;
             }
         }
-        static int ReplayCheck()
+        static string ReplayCheck()
         {
             Console.Write("Deseja continuar? (S/N): ");
             string ToContinue = Console.ReadLine()!.ToUpper();
-            if (ToContinue != "S")
-                return 1;//sim
-            else
-                return 0;//nao
+            return ToContinue;
         }
         static int Start(int playerPosition, int endLine)
         {
@@ -69,14 +73,7 @@ namespace JogodeDados.ConsoleApp
             Console.WriteLine($"O valor sorteado foi: {playerResult}");
             Console.WriteLine("--------------------------------------");          
             return playerResult;  
-        }
-           static bool playerWon(bool gameReading, int playerPosition)
-        {
-                playerPosition = 30;         
-
-                return gameReading = false;
-        }
-        
+        }    
            static int playerEspecialCases(int playerPosition, int endLine)
         {
             if (playerPosition == 5 || playerPosition == 10 || playerPosition == 15 || playerPosition == 25)
@@ -87,11 +84,9 @@ namespace JogodeDados.ConsoleApp
                 Console.WriteLine("--------------------------------------");
                 Console.WriteLine($"Você avançou para a posição: {playerPosition}");
             }
-            
 
             if (playerPosition == 7 || playerPosition == 14 || playerPosition == 20)
             {
-                
                 Console.WriteLine("Evento especial! Recuo de 2 casas!");
                 playerPosition -= 2;
                 Console.WriteLine("--------------------------------------");
