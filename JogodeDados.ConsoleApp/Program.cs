@@ -21,13 +21,32 @@ namespace JogodeDados.ConsoleApp
 
                     if (playerPosition >= endLine)
                     {
+                        playerPosition = 30;
                         gameReading = false;
                         Console.WriteLine("Parabéns! Você chegou na ultima casa!");
                         Console.WriteLine("--------------------------------------");
                     }
-                    else
-                        Console.WriteLine($"Você chegou na casa: {playerPosition} de {endLine}!");
-     
+
+                    Console.WriteLine($"Você chegou na casa: {playerPosition} de {endLine}!");
+
+                    if (playerPosition == 5 || playerPosition == 10|| playerPosition == 15 || playerPosition == 25)
+                    {
+                        Console.WriteLine("--------------------------------------");
+                        Console.WriteLine("Evento especial! Avanço extra de 3 casas!");
+                        playerPosition += 3;
+                        Console.WriteLine("--------------------------------------");
+                        Console.WriteLine($"Você avançou para a posição: {playerPosition}");
+                    }
+                    
+                    if(playerPosition == 7 || playerPosition == 13 || playerPosition == 20)
+                    {
+                        Console.WriteLine("--------------------------------------");
+                        Console.WriteLine("Evento especial! Recuo de 2 casas!");
+                        playerPosition -= 2;
+                        Console.WriteLine("--------------------------------------");
+                        Console.WriteLine($"Você recupu para a posição: {playerPosition}");
+                    }
+
                     Console.ReadLine();
                 }
                 int loop = ReplayCheck();
@@ -61,5 +80,7 @@ namespace JogodeDados.ConsoleApp
             Console.WriteLine("--------------------------------------");
             return result;
         }
+           
+        
     }
 }
