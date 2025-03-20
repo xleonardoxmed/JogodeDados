@@ -33,8 +33,9 @@ namespace JogodeDados.ConsoleApp
                         continue;
                     }
                     Console.WriteLine($"Você chegou na casa: {playerPosition} de {endLine}!");
-                    Console.WriteLine("--------------------------------------");
-                    playerEspecialCases(playerPosition, endLine);
+                    playerPosition = playerEspecialCases(playerPosition, endLine);
+
+                    ShowPositions(playerPosition, computerPosition, endLine);
 
                     if (playerPosition > endLine)
                     {
@@ -64,7 +65,6 @@ namespace JogodeDados.ConsoleApp
                     Console.WriteLine($"O valor sorteado foi: {computerPosition}");
                     Console.WriteLine("--------------------------------------");
                     Console.WriteLine($"O computador chegou a casa {computerPosition} de {endLine}!");
-                    Console.WriteLine("--------------------------------------");
 
                     if (computerPosition > endLine)
                     {
@@ -79,7 +79,8 @@ namespace JogodeDados.ConsoleApp
                         gameReading = false;
                         continue;
                     }
-                    ComputerEspecialCases(computerPosition, endLine);
+                    computerPosition = ComputerEspecialCases(computerPosition, endLine);
+                    ShowPositions(playerPosition, computerPosition, endLine);
 
                     Console.ReadLine();
                 }
@@ -122,6 +123,9 @@ namespace JogodeDados.ConsoleApp
         }    
            static int playerEspecialCases(int playerPosition, int endLine)
         {
+            if (playerPosition > endLine) playerPosition = endLine;
+            if (playerPosition < 0) playerPosition = 0;
+
             if (playerPosition == 5 || playerPosition == 10 || playerPosition == 15 || playerPosition == 25)
             {             
                 Console.WriteLine("Evento especial! Avanço extra de 3 casas!");
@@ -142,6 +146,9 @@ namespace JogodeDados.ConsoleApp
 
         static int ComputerEspecialCases(int computerPosition, int endLine)
         {
+            if (computerPosition > endLine) computerPosition = endLine;
+            if (computerPosition < 0) computerPosition = 0;
+
             if (computerPosition == 5 || computerPosition == 10 || computerPosition == 15 || computerPosition == 25)
             {
                 Console.WriteLine("Evento especial! Avanço extra de 3 casas!");
@@ -158,6 +165,13 @@ namespace JogodeDados.ConsoleApp
                 Console.WriteLine($"O computador recuou para a posição: {computerPosition} de {endLine}!");
             }
             return computerPosition;
+        }
+        static void ShowPositions(int playerPosition, int computerPosition, int endLine)
+        {
+            Console.WriteLine("--------------------------------------");
+            Console.WriteLine($"Você está na posição: {playerPosition} de {endLine}");
+            Console.WriteLine($"Computador está na posição: {computerPosition} de {endLine}");
+            Console.WriteLine("--------------------------------------");
         }
     }
 }
